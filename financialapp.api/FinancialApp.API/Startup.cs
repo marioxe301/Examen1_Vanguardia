@@ -42,6 +42,7 @@ namespace FinancialApp.API
             services.AddScoped<IRepository<Account>, AccountRepository>();
             services.AddScoped<IRepository<Transaction>, TransactionRepository>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IAccountService, AccountService>();
 
         }
 

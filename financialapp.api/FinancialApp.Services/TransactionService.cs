@@ -26,12 +26,12 @@ namespace FinancialApp.Services
             {
                 Description = transaction.Description,
                 Amount = transaction.Amount,
-                TransactionDate = transaction.TransactionDate
+                TransactionDate = transaction.TransactionDate,
+                AccountId = transaction.AccountId
             };
 
             _transactionRepository.Add(transactionEntity);
             _transactionRepository.SaveChanges();
-            transaction.AccountId = transactionEntity.AccountId;
             transaction.Id = transactionEntity.Id;
 
             var account = _accountRepository.All().Where(x => x.Id == transaction.AccountId).FirstOrDefault();
@@ -45,9 +45,18 @@ namespace FinancialApp.Services
      
         }
         
-        public ServiceResult<TransactionDataTransferObject> GetAllTransactionById(long id)
+        public ServiceResult<IEnumerable<TransactionDataTransferObject>> GetAllTransaction()
         {
-            
+            var transactionList = _transactionRepository.All()
+                .Select(x=> new TransactionDataTransferObject { 
+                    AccountId = x.AccountId,
+                    Description = x.Description,
+                    Amount = x.Amount,
+                    TransactionDate = x.TransactionDate,
+                    Id = x.Id
+                }).ToList();
+
+            return ServiceResult<IEnumerable<TransactionDataTransferObject>>.SuccessResult(transactionList);
         }
     }
 }

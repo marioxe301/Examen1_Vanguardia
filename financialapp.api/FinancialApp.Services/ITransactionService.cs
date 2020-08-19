@@ -9,6 +9,6 @@ namespace FinancialApp.Services
     public interface ITransactionService
     {
         public ServiceResult<TransactionDataTransferObject> Add(TransactionDataTransferObject transaction);
-        public ServiceResult<TransactionDataTransferObject> GetAllTransactionById(long id);
+        public ServiceResult<IEnumerable<TransactionDataTransferObject>> GetAllTransaction();
     }
 }
